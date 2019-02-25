@@ -10,4 +10,3 @@ a Resource file converter for iOS and Android App project
 
 - remove duplicated string in iOS Localizable.strings
 
-- convert i18n localization resource string to unicode string
