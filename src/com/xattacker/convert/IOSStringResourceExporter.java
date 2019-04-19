@@ -26,6 +26,7 @@ public final class IOSStringResourceExporter
                   // convert format args
                   String new_content = replaceArg(pair.getValue().getContent(), "s");
                   new_content = replaceArg(new_content, "S");
+                  new_content = new_content.replaceAll("\\\"", "\\\\\"");
                   
 						writer.write( "\"" + pair.getKey() +  "\"" + SystemParams.IOS_SEPARATOR + "\"" + new_content +  "\";");
 					}
@@ -36,7 +37,16 @@ public final class IOSStringResourceExporter
 						break;
 						
 					case COMMENTS:
-						writer.write(pair.getKey() + SystemParams.IOS_SEPARATOR + pair.getValue().getContent());
+					{
+						String comments = pair.getValue().getContent();
+						
+						String[] array = comments.split("\n");
+						
+						for (String comment : array)
+						{
+							writer.write("//" + comment + "\n");
+						}
+					}
 						break;
 				}
 				
@@ -74,8 +84,8 @@ public final class IOSStringResourceExporter
 	private String replaceArg(String aContent, String aReplaced)
 	{
 		String new_content = aContent;
-		
       new_content = new_content.replace("%" + aReplaced, "%@");
+      
       for (int i = 1; i < 9; i++)
       {
           new_content = new_content.replace("%" + i + aReplaced, "%" + i + "@");
