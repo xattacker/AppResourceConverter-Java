@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<project name="OpenAPICodegen" default="createjar">
+
+	<target name="createjar">
+	    
+	   <delete file="AppResourceConverter.jar"/>
+	   
+	   <jar destfile="AppResourceConverter.jar" basedir="bin">
+	        <manifest>
+                <attribute name="Main-Class" value="com.xattacker.MainEntry"/>
+            </manifest>
+	   </jar>
+	</target>
+
+</project>
+
