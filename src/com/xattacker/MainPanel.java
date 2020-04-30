@@ -70,18 +70,18 @@ public final class MainPanel extends Frame
 			public void actionPerformed(ActionEvent e)
 			{
 				chooseFile(
-						new FileSelectedListener()
+					new FileSelectedListener()
+					{
+						@Override
+						public void onFileSelected(File aFile)
 						{
-							@Override
-							public void onFileSelected(File aFile)
-							{
-								IOS2AndroidResourceConverter converter = new IOS2AndroidResourceConverter();
-								convertResource(aFile, converter);
-							}
-						},
-						"select file (*.strings)|*.strings",
-						"strings"
-					);
+							IOS2AndroidResourceConverter converter = new IOS2AndroidResourceConverter();
+							convertResource(aFile, converter);
+						}
+					},
+					"select file (*.strings)|*.strings",
+					"strings"
+				);
 			}
 		});
 		
@@ -96,28 +96,28 @@ public final class MainPanel extends Frame
 			public void actionPerformed(ActionEvent e)
 			{
 				chooseFile(
-						new FileSelectedListener()
+					new FileSelectedListener()
+					{
+						@Override
+						public void onFileSelected(File aFile)
 						{
-							@Override
-							public void onFileSelected(File aFile)
+							StringBuilder out_path = new StringBuilder();
+							IOSResourceFormatter formatter = new IOSResourceFormatter();
+							boolean result = formatter.format(aFile.getAbsolutePath(), out_path);
+							
+							if (result)
 							{
-								StringBuilder out_path = new StringBuilder();
-								IOSResourceFormatter formatter = new IOSResourceFormatter();
-								boolean result = formatter.format(aFile.getAbsolutePath(), out_path);
-								
-								if (result)
-								{
-									JOptionPane.showMessageDialog(new JFrame(), "format succeed", " SUCCEED ", JOptionPane.INFORMATION_MESSAGE);
-								}
-								else
-								{
-									JOptionPane.showMessageDialog(new JFrame(), "format failed", " ERROR ", JOptionPane.ERROR_MESSAGE);
-								}
+								JOptionPane.showMessageDialog(new JFrame(), "format succeed", " SUCCEED ", JOptionPane.INFORMATION_MESSAGE);
 							}
-						},
-						"select file (*.strings)|*.strings",
-						"strings"
-					);
+							else
+							{
+								JOptionPane.showMessageDialog(new JFrame(), "format failed", " ERROR ", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					},
+					"select file (*.strings)|*.strings",
+					"strings"
+				);
 			}
 		});
 		
@@ -128,6 +128,7 @@ public final class MainPanel extends Frame
 			public void windowClosing(WindowEvent evt)
 			{
 				dispose();
+				System.exit(0);
 			}
 		});
 	}
