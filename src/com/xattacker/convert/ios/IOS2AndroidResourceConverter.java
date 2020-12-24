@@ -1,4 +1,4 @@
-package com.xattacker.convert;
+package com.xattacker.convert.ios;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -17,6 +17,9 @@ import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
+
+import com.xattacker.convert.PropertyValue;
+import com.xattacker.convert.ResourceConverter;
 
 //將 iOS project 中的 Localizable.strings 檔 轉成 Android project 的 string.xml 檔
 public final class IOS2AndroidResourceConverter extends ResourceConverter

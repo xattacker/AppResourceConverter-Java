@@ -1,8 +1,10 @@
-package com.xattacker.convert;
+package com.xattacker.convert.ios;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+
+import com.xattacker.convert.PropertyValue;
 
 //重整 iOS project 中的 Localizable.strings 檔中, 移除掉重覆的key值 
 public class IOSResourceFormatter

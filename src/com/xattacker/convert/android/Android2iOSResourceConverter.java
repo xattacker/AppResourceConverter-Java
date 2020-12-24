@@ -1,4 +1,4 @@
-package com.xattacker.convert;
+package com.xattacker.convert.android;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -12,6 +12,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
+
+import com.xattacker.convert.PropertyType;
+import com.xattacker.convert.PropertyValue;
+import com.xattacker.convert.ResourceConverter;
+import com.xattacker.convert.ios.IOSStringResourceExporter;
 
 public final class Android2iOSResourceConverter extends ResourceConverter
 {

@@ -15,10 +15,11 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-import com.xattacker.convert.Android2iOSResourceConverter;
-import com.xattacker.convert.IOS2AndroidResourceConverter;
-import com.xattacker.convert.IOSResourceFormatter;
 import com.xattacker.convert.ResourceConverter;
+import com.xattacker.convert.android.Android2iOSResourceConverter;
+import com.xattacker.convert.i18n.I18nResourceConverter;
+import com.xattacker.convert.ios.IOS2AndroidResourceConverter;
+import com.xattacker.convert.ios.IOSResourceFormatter;
 
 
 public final class MainPanel extends Frame
@@ -104,14 +105,14 @@ public final class MainPanel extends Frame
 							StringBuilder out_path = new StringBuilder();
 							IOSResourceFormatter formatter = new IOSResourceFormatter();
 							boolean result = formatter.format(aFile.getAbsolutePath(), out_path);
-							
+
 							if (result)
 							{
-								JOptionPane.showMessageDialog(new JFrame(), "format succeed", " SUCCEED ", JOptionPane.INFORMATION_MESSAGE);
+								showDialog(" SUCCEED ", "format succeed", DialogType.INFORMATION);
 							}
 							else
 							{
-								JOptionPane.showMessageDialog(new JFrame(), "format failed", " ERROR ", JOptionPane.ERROR_MESSAGE);
+								showDialog(" ERROR ", "format failed", DialogType.ERROR);
 							}
 						}
 					},
@@ -121,7 +122,29 @@ public final class MainPanel extends Frame
 			}
 		});
 		
-	
+		button = new Button("Convert i18n localization Resource File");
+		add(button);
+		button.setBounds(30, 180, 300, 25);
+		button.setEnabled(true);
+		button.addActionListener(
+		new ActionListener()
+		{
+			public void actionPerformed(ActionEvent e)
+			{
+				chooseFolder(
+					new FileSelectedListener()
+					{
+						@Override
+						public void onFileSelected(File aFile)
+						{
+							I18nResourceConverter converter = new I18nResourceConverter();
+							convertResource(aFile, converter);
+						}
+					}
+				);
+			}
+		});
+		
 		addWindowListener(
 		new WindowAdapter()
 		{
@@ -159,6 +182,25 @@ public final class MainPanel extends Frame
 		}
 	}
 	
+	private void chooseFolder(FileSelectedListener aListener)
+	{
+		try
+		{
+			JFileChooser jfc = new JFileChooser();
+			jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+
+			int n = jfc.showOpenDialog(this);
+			if (n == JFileChooser.APPROVE_OPTION)
+			{
+				File selected = jfc.getSelectedFile();
+				aListener.onFileSelected(selected);
+			}
+		}
+		catch (Exception e)
+		{
+		}
+	}
+	
 	private void convertResource(File aFile, ResourceConverter aConverter)
 	{
 		StringBuilder outPath = new StringBuilder();
@@ -167,11 +209,30 @@ public final class MainPanel extends Frame
 		
 		if (result)
 		{
-			JOptionPane.showMessageDialog(new JFrame(), "converted succeed", " SUCCEED ", JOptionPane.INFORMATION_MESSAGE);
+			showDialog(" SUCCEED ", "convert succeed", DialogType.INFORMATION);
 		}
 		else
 		{
-			JOptionPane.showMessageDialog(new JFrame(), "converted failed", " ERROR ", JOptionPane.ERROR_MESSAGE);
+			showDialog(" ERROR ", "convert failed", DialogType.ERROR);
 		}
+	}
+	
+	public enum DialogType
+	{
+		INFORMATION(JOptionPane.INFORMATION_MESSAGE),
+		WARNING(JOptionPane.WARNING_MESSAGE),
+		ERROR(JOptionPane.ERROR_MESSAGE);
+		
+		int _type;
+		
+		private DialogType(int aType)
+		{
+			_type = aType;
+		}
+	};
+	
+	private void showDialog(String title, String message, DialogType type)
+	{
+		JOptionPane.showMessageDialog(new JFrame(), message, title, type._type);
 	}
 }

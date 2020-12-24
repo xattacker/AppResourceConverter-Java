@@ -1,10 +1,13 @@
-package com.xattacker.convert;
+package com.xattacker.convert.ios;
 
 import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.LinkedHashMap;
 import java.util.Map.Entry;
+
+import com.xattacker.convert.PropertyValue;
+import com.xattacker.convert.SystemParams;
 
 public final class IOSStringResourceExporter
 {
