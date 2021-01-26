@@ -13,3 +13,4 @@ C# version project:
 
 - remove duplicated string in iOS Localizable.strings
 
+- convert i18n localization resource string to unicode string
