@@ -5,7 +5,7 @@ C# version project:
 <https://github.com/xattacker/AppResourceConverter>
 
 
-### what the tool could:
+### what the tool could do:
 
 - convert Android string.xml to iOS Localizable.strings
 
