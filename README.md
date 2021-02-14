@@ -1,5 +1,5 @@
 # AppResourceConverter
-a Resource file converter for iOS and Android App project. written by Java
+a Resource file converter for iOS and Android App project. written by Java, eclipse prject.
 
 C# version project:
 <https://github.com/xattacker/AppResourceConverter>
