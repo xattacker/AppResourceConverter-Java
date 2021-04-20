@@ -15,6 +15,7 @@ public final class I18nResourceConverter extends ResourceConverter
 		
 		try
 		{
+			int converted = 0;
 			File[] files = new File(aFromPath).listFiles();
 			
 			for (File file : files)
@@ -27,9 +28,12 @@ public final class I18nResourceConverter extends ResourceConverter
 					Process p = Runtime.getRuntime().exec(cmd);
 					p.waitFor();
 					p.destroy();
+					
+					converted++;
 				}
 			}
-			result = true;
+			
+			result = converted > 0;
 		}
 		catch (Exception e)
 		{
