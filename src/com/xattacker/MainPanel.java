@@ -186,13 +186,14 @@ public final class MainPanel extends Frame
 	{
 		try
 		{
-			JFileChooser jfc = new JFileChooser();
-			jfc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
-
-			int n = jfc.showOpenDialog(this);
+			JFileChooser chooser = new JFileChooser();
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+		   chooser.setAcceptAllFileFilterUsed(false); // disable the "All files" option.
+		    
+			int n = chooser.showOpenDialog(this);
 			if (n == JFileChooser.APPROVE_OPTION)
 			{
-				File selected = jfc.getSelectedFile();
+				File selected = chooser.getSelectedFile();
 				aListener.onFileSelected(selected);
 			}
 		}

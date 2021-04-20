@@ -8,7 +8,7 @@
 	   <jar destfile="AppResourceConverter.jar" basedir="bin">
 	        <manifest>
                 <attribute name="Main-Class" value="com.xattacker.MainEntry"/>
-                <attribute name="Specification-Version" value="1.0.0"/>
+                <attribute name="Specification-Version" value="1.0.1"/>
             </manifest>
 	   </jar>
 	</target>
