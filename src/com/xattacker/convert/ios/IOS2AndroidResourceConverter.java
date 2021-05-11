@@ -20,6 +20,7 @@ import org.w3c.dom.Text;
 
 import com.xattacker.convert.PropertyValue;
 import com.xattacker.convert.ResourceConverter;
+import com.xattacker.convert.android.AndroidStringResourceExporter;
 
 //將 iOS project 中的 Localizable.strings 檔 轉成 Android project 的 string.xml 檔
 public final class IOS2AndroidResourceConverter extends ResourceConverter
@@ -44,7 +45,8 @@ public final class IOS2AndroidResourceConverter extends ResourceConverter
 				
 				aToPath.append(out_file.getAbsolutePath());
 				
-				result = exportToAndroidResourceFile(properties, aToPath.toString());
+				AndroidStringResourceExporter exporter = new AndroidStringResourceExporter();
+				result = exporter.exportToResourceFile(properties, aToPath.toString());
 	
 				aDuplicated.addAll(this.duplicateds);
 			}
@@ -55,73 +57,5 @@ public final class IOS2AndroidResourceConverter extends ResourceConverter
 		}
 		
 		return result;
-	}
-
-	private boolean exportToAndroidResourceFile(LinkedHashMap<String, PropertyValue> properties, String exportedPath) throws Exception
-	{
-		boolean succeed = false;
-
-		try
-		{
-			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();  
-			DocumentBuilder builder = factory.newDocumentBuilder();  
-		   Document doc = builder.newDocument();
-
-		   Element root = doc.createElement("resources");
-         doc.appendChild(root);
-
-			for (Entry<String, PropertyValue> pair : properties.entrySet()) 
-			{
-				switch (pair.getValue().getType())
-				{
-					case RESOURCE:
-					{
-						Element elem = doc.createElement("string");
-						elem.setAttribute("name", pair.getKey());
-						
-		             // convert format args
-                  String new_content = pair.getValue().getContent().replace("%@", "%s");
-                  for (int i = 1; i < 9; i++)
-                  {
-                      new_content = new_content.replace("%" + i + "@", "%" + i + "s");
-                  }
-						
-						Text text = doc.createTextNode(new_content);
-						elem.appendChild(text);
-						
-						root.appendChild(elem);
-					}
-						break;
-						
-					case EMPTY_LINE:
-						root.appendChild(doc.createTextNode("\n\n  "));
-						break;
-						
-					case COMMENTS:
-					{
-						Comment comment = doc.createComment(pair.getValue().getContent());
-						root.appendChild(comment);
-					}
-						break;
-				}
-			}
-			
-			TransformerFactory transformerFactory = TransformerFactory.newInstance();
-		   Transformer transformer = transformerFactory.newTransformer();
-		   transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-		   transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		   
-		   DOMSource source = new DOMSource(doc);
-		   StreamResult result = new StreamResult(new File(exportedPath));
-		   transformer.transform(source, result);
-		    
-			succeed = true;
-		}
-		catch (Exception ex)
-		{
-			throw ex;
-		}
-		
-		return succeed;
 	}
 }

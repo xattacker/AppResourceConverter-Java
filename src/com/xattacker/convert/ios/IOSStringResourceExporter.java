@@ -11,7 +11,7 @@ import com.xattacker.convert.SystemParams;
 
 public final class IOSStringResourceExporter
 {
-	public boolean exportToSResourceFile(LinkedHashMap<String, PropertyValue> properties, String exportedPath) throws Exception
+	public boolean exportToResourceFile(LinkedHashMap<String, PropertyValue> properties, String exportedPath) throws Exception
 	{
 		boolean succeed = false;
 		BufferedWriter writer = null;

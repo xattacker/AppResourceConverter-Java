@@ -7,9 +7,4 @@ public abstract class ResourceConverter
 	 protected ArrayList<String> duplicateds = new ArrayList<String>();
     
     public abstract boolean convert(String fromPath, StringBuilder toPath, ArrayList<String> duplicated);
-  
-    protected String generateUUID()
-    {
-   	 return SystemParams.generateUUID();
-    }
 }

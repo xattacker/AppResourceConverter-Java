@@ -36,7 +36,7 @@ public class IOSResourceFormatter
 			aOutFilePath.append(out_file.getAbsolutePath());
 			
 			IOSStringResourceExporter exporter = new IOSStringResourceExporter();
-			result = exporter.exportToSResourceFile(properties, aOutFilePath.toString());
+			result = exporter.exportToResourceFile(properties, aOutFilePath.toString());
 		}
 		catch (Exception ex)
 		{
