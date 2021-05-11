@@ -89,12 +89,12 @@ public final class IOSStringResourceExporter
 		String new_content = aContent;
       new_content = new_content.replace("%" + aReplaced, "%@");
       
-      for (int i = 1; i < 9; i++)
+      for (int i = 1; i <= 9; i++)
       {
           new_content = new_content.replace("%" + i + aReplaced, "%" + i + "@");
       }
       
-      for (int i = 1; i < 9; i++)
+      for (int i = 1; i <= 9; i++)
       {
           new_content = new_content.replace("%" + i + "$" + aReplaced, "%" + i + "$@");
       }
