@@ -45,7 +45,7 @@ public final class IOSStringResourceImporter
 
 						try
 						{
-							String key = line.substring(0, index);
+							String key = line.substring(0, index - 1);
 							if (!properties.containsKey(key))
 							{
 								PropertyValue value = new PropertyValue();
