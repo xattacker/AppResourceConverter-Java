@@ -2,6 +2,7 @@ package com.xattacker;
 
 import java.awt.Button;
 import java.awt.Dimension;
+import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -20,6 +21,7 @@ import com.xattacker.convert.android.Android2iOSResourceConverter;
 import com.xattacker.convert.i18n.I18nResourceConverter;
 import com.xattacker.convert.ios.IOS2AndroidResourceConverter;
 import com.xattacker.convert.ios.IOSResourceFormatter;
+import com.xattacker.util.OSPlatform;
 
 
 public final class MainPanel extends Frame
@@ -132,6 +134,7 @@ public final class MainPanel extends Frame
 			public void actionPerformed(ActionEvent e)
 			{
 				chooseFolder(
+					null,
 					new FileSelectedListener()
 					{
 						@Override
@@ -182,19 +185,34 @@ public final class MainPanel extends Frame
 		}
 	}
 	
-	private void chooseFolder(FileSelectedListener aListener)
+	private void chooseFolder(File aDefautDir, FileSelectedListener aListener)
 	{
 		try
 		{
-			JFileChooser chooser = new JFileChooser();
-			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
-		   chooser.setAcceptAllFileFilterUsed(false); // disable the "All files" option.
-		    
-			int n = chooser.showOpenDialog(this);
-			if (n == JFileChooser.APPROVE_OPTION)
+			switch (OSPlatform.getOS())
 			{
-				File selected = chooser.getSelectedFile();
-				aListener.onFileSelected(selected);
+				case Mac:
+			        System.setProperty("apple.awt.fileDialogForDirectories", "true");
+
+			        FileDialog dialog = new FileDialog(new Frame(), "Choose Directory");
+			        dialog.setVisible(true);
+
+			        String path = dialog.getDirectory() + dialog.getFile();
+			        aListener.onFileSelected(new File(path));
+					  break;
+					
+				default:
+					JFileChooser chooser = new JFileChooser(aDefautDir);
+					chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY); 
+				   chooser.setAcceptAllFileFilterUsed(false); // disable the "All files" option.
+
+					int result = chooser.showOpenDialog(this);
+					if (result == JFileChooser.APPROVE_OPTION)
+					{
+						File selected = chooser.getSelectedFile();
+						aListener.onFileSelected(selected);
+					}
+					break;
 			}
 		}
 		catch (Exception e)
