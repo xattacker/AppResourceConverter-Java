@@ -65,6 +65,7 @@ public final class AndroidStringResourceExporter
 					{
 						Comment comment = doc.createComment(pair.getValue().getContent());
 						root.appendChild(comment);
+						root.appendChild(doc.createTextNode("\n  "));
 					}
 						break;
 				}
