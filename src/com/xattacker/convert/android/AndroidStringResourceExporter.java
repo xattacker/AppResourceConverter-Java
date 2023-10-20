@@ -44,7 +44,7 @@ public final class AndroidStringResourceExporter
 						elem.setAttribute("name", pair.getKey());
 						
 		             // convert format args
-                  String new_content = pair.getValue().getContent().replace("%@", "%s");
+                  String new_content = pair.getValue().getContent().replace("%@", "%s").trim();
                   for (int i = 1; i < 9; i++)
                   {
                       new_content = new_content.replace("%" + i + "@", "%" + i + "s");
