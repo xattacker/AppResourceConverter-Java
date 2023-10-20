@@ -31,7 +31,7 @@ public final class IOSStringResourceExporter
                   new_content = replaceArg(new_content, "S");
                   new_content = new_content.replaceAll("\\\"", "\\\\\"");
                   
-						writer.write( "\"" + pair.getKey() +  "\"" + SystemParams.IOS_SEPARATOR + "\"" + new_content +  "\";");
+						writer.write( "\"" + pair.getKey() +  "\" " + SystemParams.IOS_SEPARATOR + " \"" + new_content +  "\";");
 					}
 						break;
 						
